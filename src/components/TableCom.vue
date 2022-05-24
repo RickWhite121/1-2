@@ -20,15 +20,7 @@
             {{ parentData.pageIndex * 10 + i + 1 }}
           </td>
           <td class="res__td">{{ item.City }}</td>
-          <td class="res__td res__td--img">
-            <img
-              class="res__img res__img--small"
-              :src="item.PicURL"
-              width="400"
-              height="267"
-              @mouseenter="showLargeImg(`${item.PicURL}`)"
-            />
-          </td>
+          <TableImg />
           <td class="res__td res__td--fixed">
             <a
               class="table__href"
@@ -49,6 +41,7 @@
 </template>
 
 <script>
+import TableImg from './TableImg.vue';
 export default {
   name: 'TableComp',
   data() {
@@ -71,16 +64,15 @@ export default {
       }
       return str;
     },
-
-    showLargeImg(url) {
-      console.log(url);
-    },
+  },
+  components: {
+    TableImg,
   },
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style>
 .main {
   width: 93%;
   padding-bottom: 30px;
@@ -139,10 +131,6 @@ export default {
   color: #a4a4a7;
 }
 
-.res__td--img {
-  position: relative;
-}
-
 .res__td--fixed {
   width: 175px;
 }
@@ -153,27 +141,5 @@ export default {
 
 .res__td--textLeft {
   text-align: left;
-}
-
-.res__img {
-  vertical-align: middle;
-}
-
-.res__img--small {
-  width: 80px;
-  height: auto;
-}
-
-.res__img--large {
-  position: absolute;
-  left: 110%;
-  top: 10px;
-  z-index: 1;
-  width: 300px;
-  height: auto;
-  padding: 10px;
-  background-color: #fff;
-  box-shadow: 0px 0px 4px 1px rgb(180, 178, 178);
-  box-sizing: border-box;
 }
 </style>

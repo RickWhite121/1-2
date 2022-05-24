@@ -1,10 +1,23 @@
 <template>
-  <img class="res__img--large" />
+  <td class="res__td res__td--img">
+    <img
+      class="res__img res__img--small"
+      src="${item.PicURL}"
+      width="400"
+      height="267"
+    />
+    <img
+      class="res__img res__img--large"
+      src="${item.PicURL}"
+      width="400"
+      height="267"
+    />
+  </td>
 </template>
 
 <script>
 export default {
-  name: 'CoverModule',
+  name: 'TableImg',
 
   methods: {
     // clickToCloseList() {
@@ -17,6 +30,19 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+.res__td--img {
+  position: relative;
+}
+
+.res__img {
+  vertical-align: middle;
+}
+
+.res__img--small {
+  width: 80px;
+  height: auto;
+}
+
 .res__img--large {
   position: absolute;
   left: 110%;
