@@ -3,14 +3,24 @@
     <header class="hd">
       <h1 class="hd__title">農村地方美食小吃特色料理</h1>
     </header>
-    <div class="container">
-      <TableComponent :parent-data="paginationData[curPage]" />
+    <div class="container mx-auto grid">
+      <TableCom
+        :parent-data="{
+          showData: paginationData[curPage],
+          pageIndex: curPage,
+        }"
+      />
+      <BtnCom
+        :parent-data="{ dataLength: paginationData.length, pageIndex: curPage }"
+        @update="setCurPage"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import TableComponent from './components/TableComponent.vue';
+import BtnCom from './components/BtnCom.vue';
+import TableCom from './components/TableCom.vue';
 
 export default {
   name: 'App',
@@ -50,10 +60,15 @@ export default {
         }
       });
     },
+
+    setCurPage(num) {
+      this.curPage = num;
+    },
   },
 
   components: {
-    TableComponent,
+    TableCom,
+    BtnCom,
   },
 };
 </script>
@@ -64,8 +79,9 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: #000;
   margin-top: 60px;
+  line-height: 1.4;
 }
 
 .mx-auto {

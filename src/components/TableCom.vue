@@ -12,31 +12,36 @@
       </thead>
       <tbody class="res__content" id="ResContent">
         <tr
-          v-for="(item, i) in parentData"
+          v-for="(item, i) in parentData.showData"
           :key="item.ID"
-          :class="['res__row', `${i % 2 === 0 ? '' : ' res__row--stripe'}"
+          :class="['res__row', { 'res__row--stripe': i % 2 === 0 }]"
         >
           <td class="res__td res__td--textCenter res__td--order">
-            ${curPage * showAmount + i + 1}
+            {{ parentData.pageIndex * 10 + i + 1 }}
           </td>
-          <td class="res__td">${item.City}</td>
+          <td class="res__td">{{ item.City }}</td>
           <td class="res__td res__td--img">
             <img
               class="res__img res__img--small"
-              src="${item.PicURL}"
+              :src="item.PicURL"
               width="400"
               height="267"
+              @mouseenter="showLargeImg(`${item.PicURL}`)"
             />
           </td>
           <td class="res__td res__td--fixed">
-            ${item.Url === '' ? `${item.Name}` : `<a
-              class="res__link"
+            <a
+              class="table__href"
+              :href="item.Url"
               target="_blank"
-              href="${item.Url}"
-              >${item.Name}</a
-            >`}
+              v-if="item.Url"
+              >{{ item.Name }}</a
+            >
+            <template v-else>{{ item.Name }}</template>
           </td>
-          <td class="res__td">${textLimit(item.FoodFeature)}</td>
+          <td class="res__td res__td--textLeft">
+            {{ textLimit(item.FoodFeature) }}
+          </td>
         </tr>
       </tbody>
     </table>
@@ -45,10 +50,30 @@
 
 <script>
 export default {
-  name: 'TableComponent',
+  name: 'TableComp',
+  data() {
+    return {
+      limitWordLen: 50,
+    };
+  },
   props: {
     parentData: {
-      type: Array,
+      type: Object,
+    },
+  },
+
+  computed: {},
+  methods: {
+    textLimit(str, limitStr = '') {
+      if (str.length > this.limitWordLen) {
+        limitStr = str.substring(0, this.limitWordLen - 1) + '...';
+        return limitStr;
+      }
+      return str;
+    },
+
+    showLargeImg(url) {
+      console.log(url);
     },
   },
 };
@@ -124,6 +149,10 @@ export default {
 
 .res__td--textCenter {
   text-align: center;
+}
+
+.res__td--textLeft {
+  text-align: left;
 }
 
 .res__img {
